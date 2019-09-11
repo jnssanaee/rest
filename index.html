@@ -34,9 +34,8 @@
             <thead>
               <tr>
                 <th scope="col">id</th>
-                <th scope="col">name</th>
-                <th scope="col">salary</th>
-                <th scope="col">age</th>
+                <th scope="col">title</th>
+                <th scope="col">body</th>
               </tr>
             </thead>
           </table>
@@ -46,47 +45,27 @@
 
     <script>
       $('#btn_get').click(function() {
-        const url = 'http://dummy.restapiexample.com/api/v1/employees';
+        const url = 'https://jsonplaceholder.typicode.com/posts';
 
         $.getJSON(url, function(json) {
           $('.table').show();
           $('.table').append('<tbody>');
           for (var counter = 0; counter < json.length; counter++) {
-            $('.table').append(
-              '<tr><td>' +
-                json[counter].id +
-                '</td><td>' +
-                json[counter].employee_name +
-                '</td><td>' +
-                json[counter].employee_salary +
-                '</td><td>' +
-                json[counter].employee_age +
-                '</td></tr>',
-            );
+            $('.table').append('<tr><td>' + json[counter].id + '</td><td>' + json[counter].title + '</td><td>' + json[counter].body + '</td></tr>');
           }
           $('.table').append('</tbody>');
         });
       });
 
       $('#btn_getOne').click(function() {
-        const url_one = 'http://dummy.restapiexample.com/api/v1/employee/156698';
+        const url_one = 'https://jsonplaceholder.typicode.com/posts/1';
 
         $.getJSON(url_one, function(json) {
           $('.table').show();
           $('.table tbody').remove();
 
           $('.table').append('<tbody>');
-          $('.table').append(
-            '<tr><td>' +
-              json.id +
-              '</td><td>' +
-              json.employee_name +
-              '</td><td>' +
-              json.employee_salary +
-              '</td><td>' +
-              json.employee_age +
-              '</td></tr>',
-          );
+          $('.table').append('<tr><td>' + json.id + '</td><td>' + json.title + '</td><td>' + json.body + '</td></tr>');
           $('.table').append('</tbody>');
         });
       });
