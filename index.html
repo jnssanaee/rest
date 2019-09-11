@@ -24,46 +24,71 @@
     <title>rest test</title>
   </head>
   <body>
-    <form action="https://jsonplaceholder.typicode.com/posts" method="post" id="form">
-      <div class="container">
-        <div class="row">
-          <div class="col align-self-center">
-            <div class="form-group">
-              <input type="text" class="form-control" id="name" placeholder="name" />
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="salary" placeholder="salary" />
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="age" placeholder="age" />
-            </div>
-            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col align-self-center">
+          <button type="button" class="btn btn-primary" id="btn_get">get All</button>
+          <button type="button" class="btn btn-primary" id="btn_getOne">get One</button>
+
+          <table class="table" style="display:none">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">name</th>
+                <th scope="col">salary</th>
+                <th scope="col">age</th>
+              </tr>
+            </thead>
+          </table>
         </div>
       </div>
-    </form>
+    </div>
 
     <script>
-      $('#form').submit(function(event) {
-        const nameVal = $('#name').val();
-        const salaryVal = $('#salary').val();
-        const ageVal = $('#age').val();
+      $('#btn_get').click(function() {
+        const url = 'http://dummy.restapiexample.com/api/v1/employees';
 
-        fetch('https://jsonplaceholder.typicode.com/posts', {
-          method: 'POST',
-          body: JSON.stringify({
-            name: nameVal,
-            salary: salaryVal,
-            age: ageVal,
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-        })
-          .then((response) => response.json())
-          .then((json) => console.log(json));
+        $.getJSON(url, function(json) {
+          $('.table').show();
+          $('.table').append('<tbody>');
+          for (var counter = 0; counter < json.length; counter++) {
+            $('.table').append(
+              '<tr><td>' +
+                json[counter].id +
+                '</td><td>' +
+                json[counter].employee_name +
+                '</td><td>' +
+                json[counter].employee_salary +
+                '</td><td>' +
+                json[counter].employee_age +
+                '</td></tr>',
+            );
+          }
+          $('.table').append('</tbody>');
+        });
+      });
 
-        event.preventDefault();
+      $('#btn_getOne').click(function() {
+        const url_one = 'http://dummy.restapiexample.com/api/v1/employee/156698';
+
+        $.getJSON(url_one, function(json) {
+          $('.table').show();
+          $('.table tbody').remove();
+
+          $('.table').append('<tbody>');
+          $('.table').append(
+            '<tr><td>' +
+              json.id +
+              '</td><td>' +
+              json.employee_name +
+              '</td><td>' +
+              json.employee_salary +
+              '</td><td>' +
+              json.employee_age +
+              '</td></tr>',
+          );
+          $('.table').append('</tbody>');
+        });
       });
     </script>
   </body>
